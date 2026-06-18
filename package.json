@@ -1,0 +1,24 @@
+{
+  "name": "curso-contrabaixo",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Plataforma de cursos de contrabaixo com PWA",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "setup-db": "node scripts/setup-db.js"
+  },
+  "dependencies": {
+    "next": "14.0.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@neondatabase/serverless": "^0.9.0",
+    "next-auth": "^4.24.5",
+    "bcryptjs": "^2.4.3",
+    "uuid": "^9.0.1",
+    "dotenv": "^16.4.7",
+    "peerjs": "^1.5.2",
+    "simple-peer": "^9.11.1"
+  }
+}
