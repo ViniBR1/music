@@ -2,7 +2,6 @@ import { query } from '../../../../lib/neon.js';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../auth/[...nextauth]/route.js';
 
-// POST - Adicionar aula ao módulo
 export async function POST(request, { params }) {
   try {
     const session = await getServerSession(authOptions);
@@ -45,7 +44,6 @@ export async function POST(request, { params }) {
   }
 }
 
-// DELETE - Remover aula
 export async function DELETE(request, { params }) {
   try {
     const session = await getServerSession(authOptions);

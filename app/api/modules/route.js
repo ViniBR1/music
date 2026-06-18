@@ -53,23 +53,20 @@ export async function POST(request) {
   try {
     console.log('📡 Recebendo requisição para criar módulo...');
     
-    // Buscar a sessão do servidor
     const session = await getServerSession(authOptions);
     
     console.log('🔍 Sessão do servidor:', session);
-    console.log('🔍 User da sessão:', session?.user);
     
     if (!session) {
       console.log('❌ Sessão não encontrada');
-      return Response.json({ error: 'Não autorizado - Sessão não encontrada' }, { status: 401 });
+      return Response.json({ error: 'Não autorizado' }, { status: 401 });
     }
     
     if (!session.user) {
       console.log('❌ Usuário não encontrado na sessão');
-      return Response.json({ error: 'Não autorizado - Usuário não encontrado' }, { status: 401 });
+      return Response.json({ error: 'Não autorizado' }, { status: 401 });
     }
     
-    // Verificar o role - USAR session.user.role (NÃO session.role)
     const userRole = session.user.role;
     console.log(`👤 Role do usuário na sessão: ${userRole}`);
     
@@ -86,18 +83,15 @@ export async function POST(request) {
     
     const { title, description, price, is_free, free_lesson_url, teacherId, lessons } = data;
 
-    // Validar dados obrigatórios
     if (!title) {
       return Response.json({ error: 'Título é obrigatório' }, { status: 400 });
     }
 
-    // Usar o ID do usuário da sessão
     const teacher_id = teacherId || session.user.id;
     const modulePrice = parseFloat(price) || 0;
 
     console.log(`👨‍🏫 Criando módulo para professor: ${teacher_id}`);
 
-    // Inserir módulo
     const result = await query(
       `INSERT INTO modules (title, description, price, teacher_id, is_free, free_lesson_url)
        VALUES ($1, $2, $3, $4, $5, $6)
@@ -108,7 +102,6 @@ export async function POST(request) {
     const newModule = result[0];
     console.log(`✅ Módulo criado com ID: ${newModule.id}`);
 
-    // Se tiver aulas para adicionar
     if (lessons && lessons.length > 0) {
       console.log(`📹 Adicionando ${lessons.length} aulas...`);
       
@@ -125,7 +118,6 @@ export async function POST(request) {
       }
     }
 
-    // Buscar o módulo completo com as aulas
     const completeModule = await query(
       `SELECT 
         m.*,

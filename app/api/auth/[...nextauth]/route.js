@@ -22,7 +22,6 @@ export const authOptions = {
 
         if (user) {
           console.log('✅ Usuário autenticado:', user.email, 'Role:', user.role);
-          console.log('📦 Objeto user:', user);
           return {
             id: user.id,
             email: user.email,
@@ -43,7 +42,7 @@ export const authOptions = {
         token.email = user.email;
         token.name = user.name;
       }
-      console.log('🔐 JWT Token gerado:', { id: token.id, role: token.role });
+      console.log('🔐 JWT Token:', { id: token.id, role: token.role });
       return token;
     },
     async session({ session, token }) {
@@ -53,11 +52,7 @@ export const authOptions = {
         session.user.email = token.email;
         session.user.name = token.name;
       }
-      console.log('📝 Session criada:', { 
-        id: session.user?.id, 
-        role: session.user?.role,
-        email: session.user?.email 
-      });
+      console.log('📝 Session:', { id: session.user?.id, role: session.user?.role });
       return session;
     }
   },
@@ -68,7 +63,6 @@ export const authOptions = {
     strategy: 'jwt',
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true, // Habilita logs de debug do NextAuth
 };
 
 const handler = NextAuth(authOptions);
